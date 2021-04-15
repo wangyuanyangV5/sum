@@ -39,34 +39,13 @@ import java.util.Map;
 public class TwoSum {
 
     public int[] twoSum(int[] nums, int target) {
-        Map<Integer, List<Integer>> map = new HashMap<>(nums.length);
-
-        Integer index = 0;
-        for(int i=0;i<nums.length;i++){
-            List<Integer> list;
-            if(map.containsKey(nums[i])){
-                list = map.get(nums[i]);
-            }else {
-                list = new ArrayList<>();
-                map.put(nums[i],list);
+        Map<Integer, Integer> hashtable = new HashMap<Integer, Integer>();
+        for (int i = 0; i < nums.length; ++i) {
+            if (hashtable.containsKey(target - nums[i])) {
+                return new int[]{hashtable.get(target - nums[i]), i};
             }
-            list.add(index++);
-
+            hashtable.put(nums[i], i);
         }
-        for(Map.Entry<Integer, List<Integer>> entry : map.entrySet()){
-            Integer i = entry.getKey();
-            Integer other = target - i;
-            if(i.equals(other)){
-                if(entry.getValue().size() > 1){
-                    return new int[]{entry.getValue().get(0),entry.getValue().get(1)};
-                }else {
-                    continue;
-                }
-            }
-            if(map.containsKey(target - i)){
-                return new int[]{entry.getValue().get(0),map.get(target - i).get(0)};
-            }
-        }
-        return null;
+        return new int[0];
     }
 }

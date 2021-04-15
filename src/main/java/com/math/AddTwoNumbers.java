@@ -31,66 +31,29 @@ package com.math;
  */
 public class AddTwoNumbers {
     public  ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        int add = 0;
-        ListNode head = null;
-        ListNode tail = null;
-        ListNode first = l1;
-        ListNode thrend = l2;
-        while (first != null && thrend != null){
-            int sum = 0;
-            sum = add + (first.val + thrend.val);
-
-            add = sum / 10;
-
-            ListNode now = new ListNode(sum % 10);
-            if(head == null){
-                head = now;
-                tail = now;
-            }else {
-                tail.next = now;
-                tail = now;
+        ListNode head = null, tail = null;
+        int carry = 0;
+        while (l1 != null || l2 != null) {
+            int n1 = l1 != null ? l1.val : 0;
+            int n2 = l2 != null ? l2.val : 0;
+            int sum = n1 + n2 + carry;
+            if (head == null) {
+                head = tail = new ListNode(sum % 10);
+            } else {
+                tail.next = new ListNode(sum % 10);
+                tail = tail.next;
             }
-            first = first.next;
-            thrend = thrend.next;
-        }
-
-        if(first != null){
-            if(head == null){
-                return first;
-            }else {
-                while (first != null){
-                    tail.next = first;
-                    if(add != 0){
-                        int sum = first.val + add;
-                        first.val = sum % 10;
-                        add = sum /10;
-                    }
-                    tail = first;
-                    first = first.next;
-                }
+            carry = sum / 10;
+            if (l1 != null) {
+                l1 = l1.next;
+            }
+            if (l2 != null) {
+                l2 = l2.next;
             }
         }
-
-        if (thrend != null){
-            if(head == null){
-                return first;
-            }else {
-                while (thrend != null){
-                    tail.next = thrend;
-                    if(add != 0){
-                        int sum = thrend.val + add;
-                        thrend.val = sum % 10;
-                        add = sum /10;
-                    }
-                    tail = thrend;
-                    thrend = thrend.next;
-                }
-            }
+        if (carry > 0) {
+            tail.next = new ListNode(carry);
         }
-        if(add > 0){
-            tail.next = new ListNode(add);
-        }
-
         return head;
     }
 
