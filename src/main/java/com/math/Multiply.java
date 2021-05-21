@@ -17,7 +17,7 @@ package com.math;
  * 不能使用任何标准库的大数类型（比如 BigInteger）或直接将输入转换为整数来处理。
  */
 public class Multiply {
-    public String multiply(String num1, String num2) {
+    public static String multiply(String num1, String num2) {
         if("0".equals(num1) || "0".equals(num2)){
             return "0";
         }
@@ -44,7 +44,37 @@ public class Multiply {
         }
 
 
+        while (firstLength > 0){
+            Integer first = Integer.parseInt(firsts[firstLength -1]+"");
+            Integer sum = first;
+            Integer result = sum % 10 + add;
+            add = sum /10;
+            if(result > 10){
+                result -=10;
+                add+=1;
+            }
+            stringBuilder.append(result);
+            firstLength --;
+        }
 
-        return null;
+        while (secondLength > 0){
+            Integer second = Integer.parseInt(seconds[secondLength -1]+"");
+            Integer sum = second;
+            Integer result = sum % 10 + add;
+            add = sum /10;
+            if(result > 10){
+                result -=10;
+                add+=1;
+            }
+            stringBuilder.append(result);
+            secondLength --;
+        }
+
+        return stringBuilder.toString();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(multiply("2","3"));
+        System.out.println(multiply("123","456"));
     }
 }
